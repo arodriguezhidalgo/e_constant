@@ -75,7 +75,8 @@ void createArray(mpz_t *data)
 
 int main()
 {
-  mpf_set_default_prec(1000);
+  const int prec = 12;
+  mpf_set_default_prec(prec);
 
   mpz_t results[2];
 
@@ -85,7 +86,7 @@ int main()
 
   // Define variable values.
   mpz_set_ui(a, 0);
-  mpz_set_ui(b, 128);
+  mpz_set_ui(b, 1500);
 
   // Compute p and q, and store it in results.
   compute(results, a, b);
@@ -106,7 +107,7 @@ int main()
   mpf_add_ui(e, e, 1);
 
   // Print the results.
-  mpf_out_str(stdout, 1, 1000, e);
+  mpf_out_str(stdout, 1, prec, e);
 
   // Clean up.
   mpz_clear(results[0]);
