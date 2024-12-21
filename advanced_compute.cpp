@@ -4,7 +4,6 @@ using namespace std;
 #include <stdio.h>
 #include <fstream>
 
-
 void compute(mpz_t *result, mpz_t a, mpz_t b)
 {
   mpz_t out;
@@ -76,6 +75,8 @@ void createArray(mpz_t *data)
 
 int main()
 {
+  mpf_set_default_prec(1000);
+
   mpz_t results[2];
 
   mpz_t a, b;
@@ -102,5 +103,6 @@ int main()
   mpf_div(e, p, q);
   mpf_add_ui(e, e, 1);
 
-  // mpf_out_str(stdout, 1, 1000, e);
+  mpf_out_str(stdout, 1, 1000, e);
+  // mpf_out_str(MyFile, 1, 1000, e);
 }
