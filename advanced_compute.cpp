@@ -87,8 +87,10 @@ int main()
   mpz_set_ui(a, 0);
   mpz_set_ui(b, 128);
 
+  // Compute p and q, and store it in results.
   compute(results, a, b);
 
+  // Compute e = 1+p/q.
   mpf_t e;
   mpf_init(e);
 
@@ -103,6 +105,7 @@ int main()
   mpf_div(e, p, q);
   mpf_add_ui(e, e, 1);
 
+  // Print the results.
   mpf_out_str(stdout, 1, 1000, e);
 
   // Clean up.
