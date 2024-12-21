@@ -104,5 +104,13 @@ int main()
   mpf_add_ui(e, e, 1);
 
   mpf_out_str(stdout, 1, 1000, e);
-  // mpf_out_str(MyFile, 1, 1000, e);
+
+  // Clean up.
+  mpz_clear(results[0]);
+  mpz_clear(results[1]);
+  mpz_clear(a);
+  mpz_clear(b);
+  mpf_clear(e);
+  mpf_clear(p);
+  mpf_clear(q);
 }
