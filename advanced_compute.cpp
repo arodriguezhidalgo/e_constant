@@ -67,12 +67,6 @@ void compute(mpz_t *result, mpz_t a, mpz_t b)
   mpz_clear(out);
 }
 
-void createArray(mpz_t *data)
-{
-  mpz_init(data[0]);
-  mpz_set_ui(data[0], 1);
-}
-
 int main()
 {
   const int prec = 12;
