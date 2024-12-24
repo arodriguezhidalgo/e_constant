@@ -8,10 +8,9 @@ int main()
 {
   const int precision = 12000;
   mpf_set_default_prec(precision);
-  const bool VERBOSITY = false;
+  const bool VERBOSITY = true;
   const bool WRITE_FILE = false;
 
-  const int userSpecifiedNumberOfDigits = 30;
   MPComputeEngine eng;
   mpf_t output;
   mpf_init(output);
@@ -22,6 +21,12 @@ int main()
   mpf_t correct_digits;
   mpf_init(correct_digits);
 
+    // Ask the user to specify a number of digits.
+  int userSpecifiedNumberOfDigits;
+  std::cout << "Define how many digits you want to compute: ";
+  // std::cin >> userSpecifiedNumberOfDigits;  
+  userSpecifiedNumberOfDigits = 300;
+
   // Iterate multiple times to compute the digits of e.
   // for (int i = 1; i <= nDigits; i++)
   int computedNumberOfDigits = 0;
@@ -31,7 +36,7 @@ int main()
     eng.compute(nIterations, precision, output);
     if (VERBOSITY == true)
     {
-      std::cout << nIterations << ". ";
+      std::cout << nIterations << ". " << computedNumberOfDigits << ". -";
       mpf_out_str(stdout, 1, computedNumberOfDigits, output);
     }
 
@@ -53,7 +58,7 @@ int main()
       //  Position - |0 |1 |2 |3 |4 |5 |6 |7 |
       // Also, we cast such quantity to integer.
 
-      computedNumberOfDigits = stoi(digits.substr(7, 2));
+      computedNumberOfDigits = stoi(digits.substr(7, digits.length()));
 
       if (VERBOSITY == true)
       {
