@@ -5,16 +5,15 @@
 class ComputeEngine
 {
 public:
-  virtual void compute(int n) = 0;
+  virtual void compute(int n, int prec, mpf_t output) = 0;
 };
 
 class MPComputeEngine : public ComputeEngine
 // Use GMP to compute the e constant.
 {
 public:
-  void compute(int n)
-  {
-    const int prec = n;
+  void compute(int nIterations, int prec, mpf_t output)
+  {    
     mpf_set_default_prec(prec);
 
     mpz_t results[2];
@@ -27,7 +26,7 @@ public:
 
     // Define variable values.
     mpz_set_ui(a, 0);
-    mpz_set_ui(b, 1500);
+    mpz_set_ui(b, nIterations);
 
     // Compute p and q, and store it in results.
     internal_compute(results, a, b);
@@ -47,8 +46,8 @@ public:
     mpf_div(e, p, q);
     mpf_add_ui(e, e, 1);
 
-    // Print the results.
-    mpf_out_str(stdout, 1, prec, e);
+    // Print the results.    
+    mpf_set(output, e);
 
     // Clean up.
     clear_z_array(results);
