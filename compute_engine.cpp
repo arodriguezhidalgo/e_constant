@@ -1,5 +1,6 @@
 #include <iostream>
 #include <gmp.h>
+#include <gmpxx.h>
 #include <stdio.h>
 #include <fstream>
 class ComputeEngine
