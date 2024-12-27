@@ -6,7 +6,7 @@
 
 int main()
 {
-  const int precision = 12000;
+  const int precision = 10000;
   mpf_set_default_prec(precision);
   const bool VERBOSITY = true;
   const bool WRITE_FILE = false;
@@ -21,23 +21,26 @@ int main()
   mpf_t correct_digits;
   mpf_init(correct_digits);
 
-    // Ask the user to specify a number of digits.
+  // Ask the user to specify a number of digits.
   int userSpecifiedNumberOfDigits;
   std::cout << "Define how many digits you want to compute: ";
-  // std::cin >> userSpecifiedNumberOfDigits;  
-  userSpecifiedNumberOfDigits = 300;
+  // std::cin >> userSpecifiedNumberOfDigits;
+  userSpecifiedNumberOfDigits = 32;
 
   // Iterate multiple times to compute the digits of e.
   // for (int i = 1; i <= nDigits; i++)
   int computedNumberOfDigits = 0;
+  int correctNumberOfComputedDigits;
   int nIterations = 1;
+
   while (computedNumberOfDigits < userSpecifiedNumberOfDigits)
   {
+    correctNumberOfComputedDigits = computedNumberOfDigits;
     eng.compute(nIterations, precision, output);
     if (VERBOSITY == true)
     {
-      std::cout << nIterations << ". " << computedNumberOfDigits << ". -";
-      mpf_out_str(stdout, 1, computedNumberOfDigits, output);
+      std::cout << nIterations << ". #Digits: " << computedNumberOfDigits << ". Output: ";
+      mpf_out_str(stdout, 1, computedNumberOfDigits + 1, output);
     }
 
     if (nIterations != 1)
@@ -60,9 +63,13 @@ int main()
 
       computedNumberOfDigits = stoi(digits.substr(7, digits.length()));
 
+      // Stop computations whenever we reach max available precision.
+      if (computedNumberOfDigits == 0)
+        break;
+
       if (VERBOSITY == true)
       {
-        std::cout << digits << ", " << computedNumberOfDigits;
+        std::cout << ", Diff: " << digits << ", #CorrectDigits: " << computedNumberOfDigits;
         std::cout << "\n";
       }
     }
@@ -72,8 +79,9 @@ int main()
   }
 
   // Write outputs.
+
   std::cout << "- # iterations: " << nIterations - 1 << "\n- # verified digits: " << computedNumberOfDigits << "\n- e-constant: ";
-  mpf_out_str(stdout, 10, computedNumberOfDigits, output);
+  mpf_out_str(stdout, 10, correctNumberOfComputedDigits, output);
   std::cout << "\n";
 
   // Write the result in a file.
